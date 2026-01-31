@@ -1,0 +1,241 @@
+/* SyncMate Luxury Design System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap');
+
+:root {
+    --bg-deep: #050505;
+    --glass-surface: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --neon-gradient: linear-gradient(135deg, #c084fc 0%, #db2777 100%);
+    --neon-glow: 0 0 20px rgba(219, 39, 119, 0.3);
+    --text-primary: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --success: #10b981;
+    --error: #ef4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    width: 350px;
+    height: 500px;
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container {
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(circle at top right, rgba(219, 39, 119, 0.1), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(100, 100, 255, 0.05), transparent 40%);
+}
+
+/* --- Header --- */
+header {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+    background: var(--neon-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: var(--glass-surface);
+    border: 1px solid var(--glass-border);
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--error);
+    box-shadow: 0 0 8px var(--error);
+    transition: all 0.3s ease;
+}
+
+.status-pill[data-connected="true"] .status-dot {
+    background-color: var(--success);
+    box-shadow: 0 0 8px var(--success);
+}
+
+.status-pill[data-connected="true"] {
+    color: var(--success);
+    border-color: rgba(16, 185, 129, 0.2);
+}
+
+/* --- Controls --- */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.glass-card {
+    background: var(--glass-surface);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 20px;
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.glass-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: var(--glass-surface);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--neon-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.btn-primary:hover {
+    border-color: transparent;
+    box-shadow: var(--neon-glow);
+}
+
+.btn-primary:hover::before {
+    opacity: 1;
+}
+
+/* --- Input Group --- */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cool-input {
+    width: 100%;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.cool-input:focus {
+    border-color: #c084fc;
+}
+
+/* --- Footer --- */
+footer {
+    margin-top: auto;
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+/* --- Animations --- */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-4px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+.shake {
+    animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+    border-color: var(--error) !important;
+}
+
+/* --- Toast Notification --- */
+.toast {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(16, 185, 129, 0.9);
+    /* Success Green */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    z-index: 100;
+}
+
+.toast.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

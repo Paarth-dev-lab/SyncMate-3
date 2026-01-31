@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyncMate</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <h1>SyncMate</h1>
+            <div class="status-pill" id="status-pill">
+                <div class="status-dot"></div>
+                <span id="status-text">Disconnected</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Default State -->
+            <div id="default-view">
+                <button id="create-btn" class="btn-primary glass-card">
+                    Create Room
+                </button>
+
+                <div class="glass-card input-group">
+                    <input type="text" id="room-id" class="cool-input" placeholder="Enter Room ID" maxlength="6">
+                    <button id="join-btn" class="btn-primary" style="margin-top: 8px;">
+                        Join Room
+                    </button>
+                </div>
+            </div>
+
+            <!-- Connected State -->
+            <div id="connected-view" style="display: none;">
+                <div class="glass-card" style="text-align: center;">
+                    <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">CURRENT ROOM</p>
+                    <h2 id="display-room-id"
+                        style="font-size: 32px; letter-spacing: 2px; color: #fff; margin-bottom: 16px;"></h2>
+                    <button id="copy-btn" class="btn-primary"
+                        style="padding: 8px; font-size: 12px; margin-bottom: 12px;">
+                        Copy ID
+                    </button>
+                </div>
+                <button id="exit-btn" class="btn-primary"
+                    style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #ef4444; margin-top: auto;">
+                    Exit Room
+                </button>
+            </div>
+        </main>
+
+        <footer>
+            Built for LDR <span style="color: #db2777;">♥</span>
+        </footer>
+    </div>
+    <script src="popup.js" type="module"></script>
+</body>
+
+</html>
