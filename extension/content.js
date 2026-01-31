@@ -6,34 +6,20 @@ console.log("%c [SyncMate] Engine Started ", "background: #000; color: #00ff00; 
 let isRemoteUpdate = false; // Flag to prevent infinite loops
 
 // --- 1. Shorts Navigation Sensor (Monkey Patch + Event Listener) ---
+// --- 1. Shorts Navigation Sensor (Polling - Safe & Reliable) ---
+let lastUrl = window.location.href;
 const injectNavigationSensor = () => {
-    const script = document.createElement('script');
-    script.textContent = `
-        (function() {
-            const pushState = history.pushState;
-            const replaceState = history.replaceState;
+    // Polling is safer than injecting scripts (CSP friendly)
+    setInterval(() => {
+        if (window.location.href !== lastUrl) {
+            lastUrl = window.location.href;
+            handleUrlChange();
+        }
+    }, 500);
 
-            history.pushState = function() {
-                pushState.apply(history, arguments);
-                window.dispatchEvent(new Event('locationchange'));
-            };
-
-            history.replaceState = function() {
-                replaceState.apply(history, arguments);
-                window.dispatchEvent(new Event('locationchange'));
-            };
-        })();
-    `;
-    document.documentElement.appendChild(script);
-    script.remove();
-
-    // Listen for the custom event
-    window.addEventListener('locationchange', () => {
-        handleUrlChange();
-    });
-
-    // YouTube's native SPF/SPA event
+    // Also listen to YouTube's native event as a backup
     window.addEventListener('yt-navigate-finish', () => {
+        lastUrl = window.location.href;
         handleUrlChange();
     });
 };

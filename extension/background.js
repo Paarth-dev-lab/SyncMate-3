@@ -255,12 +255,22 @@ const ensureTabIsOnUrl = async (targetUrl) => {
     });
 };
 
-const sendMessageToActiveTab = async (payload) => {
+const sendMessageToActiveTab = async (payload, retries = 5) => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (tab && tab.id && tab.url.includes("youtube.com")) {
+
+    if (tab && tab.id && tab.url && tab.url.includes("youtube.com")) {
         chrome.tabs.sendMessage(tab.id, payload).catch(err => {
-            // Content script might not be ready
+            // Content script likely not ready (loading or not tracking)
+            if (retries > 0) {
+                console.log(`[SyncMate] Message Failed (${payload.type}). Retrying... (${retries})`);
+                setTimeout(() => sendMessageToActiveTab(payload, retries - 1), 500);
+            } else {
+                console.error("[SyncMate] Message Failed Permanently:", err);
+            }
         });
+    } else {
+        // Not on YouTube? 
+        if (retries > 0) setTimeout(() => sendMessageToActiveTab(payload, retries - 1), 1000);
     }
 };
 
